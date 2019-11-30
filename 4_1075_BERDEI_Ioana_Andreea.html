@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <!--responsiveness-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Photo Collage</title>
+    <!--dependencies-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--resources-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="4_1075_BERDEI_Ioana_Andreea.css"
+    />
+  </head>
+
+  <body>
+    <ul id="menu">
+      <li>
+        <a href="" onclick="save()" download="collage.png" id="download"
+          ><i class="fa fa-download"></i
+        ></a>
+      </li>
+      <li>
+        <a href="#" id="halfFrame" onclick="half()"
+          ><img height="30" width="30" src="media/half.png"
+        /></a>
+      </li>
+    </ul>
+    <div id="imageLoader">
+      <p>
+        Drop your images here!
+      </p>
+    </div>
+    <canvas id="myCanvas" height="500" width="800"></canvas>
+    <script src="4_1075_BERDEI_Ioana_Andreea.js"></script>
+  </body>
+</html>
