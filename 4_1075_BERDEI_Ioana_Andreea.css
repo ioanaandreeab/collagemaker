@@ -11,6 +11,7 @@ body {
 }
 body {
   background-color: #c7ccdb;
+  font-family: "Lato", sans-serif;
 }
 /*settings for the side menu*/
 .fa {
@@ -43,6 +44,22 @@ body {
   margin: 0 auto;
 }
 
+#imageLoader p {
+  text-align: center;
+}
+
+#deleteSelectedBtn {
+  position: fixed;
+  bottom: 5;
+  left: 60;
+}
+
+#drawSelectedBtn {
+  position: fixed;
+  bottom: 5;
+  left: 140;
+}
+
 li {
   padding: 5px;
 }
@@ -56,7 +73,52 @@ canvas {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  display: block;
-  margin: 0 auto;
+  left: 30%;
   background-color: white;
+}
+#options {
+  position: absolute;
+  left: 250px;
+  top: 0;
+}
+
+button {
+  border: none;
+  padding: 10px;
+  border-radius: 1px;
+  background-color: #2a324b;
+  color: #c7ccdb;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #010400;
+}
+
+/*scrollbar*/
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a324b;
+  border: 0 none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 0 none #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #010400;
 }

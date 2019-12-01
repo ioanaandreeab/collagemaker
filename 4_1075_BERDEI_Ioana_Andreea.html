@@ -5,6 +5,10 @@
     <title>Photo Collage</title>
     <!--dependencies-->
     <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
@@ -20,22 +24,50 @@
   <body>
     <ul id="menu">
       <li>
-        <a href="" onclick="save()" download="collage.png" id="download"
-          ><i class="fa fa-download"></i
-        ></a>
+        <a href="#"><i class="fa fa-upload"></i></a>
       </li>
       <li>
         <a href="#" id="halfFrame" onclick="half()"
           ><img height="30" width="30" src="media/half.png"
         /></a>
       </li>
+      <li>
+        <a href="#"><i class="fa fa-edit"></i></a>
+      </li>
+      <li>
+        <a href="" onclick="save()" download="collage.png" id="download"
+          ><i class="fa fa-download"></i
+        ></a>
+      </li>
     </ul>
     <div id="imageLoader">
       <p>
         Drop your images here!
       </p>
+      <button id="deleteSelectedBtn" onclick="deleteSelectedImg()">
+        Ștergere
+      </button>
+      <button id="drawSelectedBtn">Desenare</button>
     </div>
     <canvas id="myCanvas" height="500" width="800"></canvas>
+    <div id="options">
+      <p>Background image:</p>
+      <input type="file" accept="image/*" />
+      <p>No. of photos:</p>
+      <select>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+      <p>Template:</p>
+      <select>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+    </div>
     <script src="4_1075_BERDEI_Ioana_Andreea.js"></script>
   </body>
 </html>
