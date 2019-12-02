@@ -1,5 +1,5 @@
 //prelucrari pentru afisarea div-urilor in functie de ce e selectat din meniu
-window.onload = fillbg();
+
 var myCanvas = document.querySelector("#myCanvas");
 var context = myCanvas.getContext("2d");
 //model - imaginile uploadate prin drag & drop
@@ -52,7 +52,7 @@ imageArea.ondrop = function(e) {
 };
 
 function draw(images) {
-  var canvas = document.getElementsByTagName("canvas")[0];
+  /*var canvas = document.getElementsByTagName("canvas")[0];
   var context = canvas.getContext("2d");
   for (let i = 0; i < images.length; i++) {
     let myImage1 = new Image();
@@ -70,7 +70,37 @@ function draw(images) {
         canvas.height - 20
       );
     };
-  }
+  }*/
+  let myImage1 = new Image();
+  myImage1.src = images[0].src;
+  myImage1.onload = function() {
+    context.drawImage(
+      myImage1,
+      0,
+      0,
+      myImage1.width,
+      myImage1.height,
+      10,
+      10,
+      myCanvas.width / 2 - 10,
+      myCanvas.height - 20
+    );
+  };
+  let myImage2 = new Image();
+  myImage2.src = images[1].src;
+  myImage2.onload = function() {
+    context.drawImage(
+      myImage2,
+      0,
+      0,
+      myImage2.width,
+      myImage2.height,
+      myCanvas.width / 2,
+      10,
+      myCanvas.width / 2 - 10,
+      myCanvas.height - 20
+    );
+  };
 }
 
 //functie de salvare a colajului din canvas
@@ -81,15 +111,17 @@ function save() {
   button.href = dataURL;
 }
 
-//functie pentru stabilirea imaginii de fundal
-function fillbg() {
-  let image = new Image();
-  image.src = "media/pattern.png";
-  image.onload = () => {
-    context.fillStyle = context.createPattern(image, "repeat");
-    context.fillRect(0, 0, myCanvas.width, myCanvas.height);
-  };
-}
+//tratarea evenimentului de change pt input canvas bg -> fillBg
+document.querySelector("#bgPicker").addEventListener("change", function() {
+  if (this.files[0]) {
+    let image = new Image();
+    image.src = URL.createObjectURL(this.files[0]);
+    image.onload = () => {
+      context.fillStyle = context.createPattern(image, "repeat");
+      context.fillRect(0, 0, myCanvas.width, myCanvas.height);
+    };
+  }
+});
 
 function deleteSelectedImg() {
   var imagesToBeDeleted = [];
@@ -109,5 +141,26 @@ function deleteSelectedImg() {
       myImages.splice(indexRemoved, 1);
     }
     console.log(myImages);
+  }
+}
+
+function getSelectedImages() {
+  let selectedImages = [];
+  for (let i = 0; i < myImages.length; i++) {
+    if (myImages[i].selected === 1) {
+      selectedImages.push(myImages[i]);
+    }
+  }
+  return selectedImages;
+}
+
+function drawSelectedImgs() {
+  var selectedImages = getSelectedImages();
+  var noPhotos = document.querySelector("#noPhotos").value;
+  var template = document.querySelector("#template").value;
+  console.log(noPhotos);
+  console.log(template);
+  if (noPhotos == 2) {
+    draw(selectedImages);
   }
 }

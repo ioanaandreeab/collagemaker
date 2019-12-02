@@ -2,6 +2,7 @@
   <head>
     <!--responsiveness-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
     <title>Photo Collage</title>
     <!--dependencies-->
     <link
@@ -47,25 +48,27 @@
       <button id="deleteSelectedBtn" onclick="deleteSelectedImg()">
         Ștergere
       </button>
-      <button id="drawSelectedBtn">Desenare</button>
+      <button id="drawSelectedBtn" onclick="drawSelectedImgs()">
+        Desenare
+      </button>
     </div>
     <canvas id="myCanvas" height="500" width="800"></canvas>
     <div id="options">
       <p>Background image:</p>
-      <input type="file" accept="image/*" />
+      <input type="file" accept="image/*" id="bgPicker" />
       <p>No. of photos:</p>
-      <select>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
+      <select id="noPhotos">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
       </select>
       <p>Template:</p>
-      <select>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
+      <select id="template">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
       </select>
     </div>
     <script src="4_1075_BERDEI_Ioana_Andreea.js"></script>
