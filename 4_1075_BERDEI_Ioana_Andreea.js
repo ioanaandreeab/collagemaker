@@ -12,17 +12,17 @@ var myImages = [];
 //alegere format canvas
 
 var imageArea = document.querySelector("#imageLoader");
-imageArea.ondragover = function(e) {
+imageArea.ondragover = e => {
   e.preventDefault(); //nu lasa browserul sa deschida imaginea in pagina
 };
 
-imageArea.ondrop = function(e) {
+imageArea.ondrop = e => {
   e.preventDefault(); //nu lasa browserul sa deschida imaginea in pagina
   let files = e.dataTransfer.files;
   if (files.length > 0) {
     for (let i = 0; i < files.length; i++) {
       let reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = e => {
         let dest = document.querySelector("#imageLoader");
         let currImg = new Image();
         currImg.src = e.target.result;
@@ -35,7 +35,7 @@ imageArea.ondrop = function(e) {
         var correspCB = document.createElement("input");
         correspCB.setAttribute("type", "checkbox");
         correspCB.id = "checkBox_" + (myImages.length - 1);
-        correspCB.addEventListener("change", function(e) {
+        correspCB.addEventListener("change", e => {
           var currCheckbox = e.target;
           if (currCheckbox.checked) {
             let currCheckboxId = currCheckbox.id;
@@ -52,28 +52,9 @@ imageArea.ondrop = function(e) {
 };
 
 function draw(images) {
-  /*var canvas = document.getElementsByTagName("canvas")[0];
-  var context = canvas.getContext("2d");
-  for (let i = 0; i < images.length; i++) {
-    let myImage1 = new Image();
-    myImage1.src = mySrc;
-    myImage1.onload = function() {
-      context.drawImage(
-        myImage1,
-        0,
-        0,
-        myImage1.width,
-        myImage1.height,
-        10,
-        10,
-        canvas.width / 2 - 10,
-        canvas.height - 20
-      );
-    };
-  }*/
   let myImage1 = new Image();
   myImage1.src = images[0].src;
-  myImage1.onload = function() {
+  myImage1.onload = () => {
     context.drawImage(
       myImage1,
       0,
@@ -88,7 +69,7 @@ function draw(images) {
   };
   let myImage2 = new Image();
   myImage2.src = images[1].src;
-  myImage2.onload = function() {
+  myImage2.onload = () => {
     context.drawImage(
       myImage2,
       0,
@@ -112,7 +93,7 @@ function save() {
 }
 
 //tratarea evenimentului de change pt input canvas bg -> fillBg
-document.querySelector("#bgPicker").addEventListener("change", function() {
+document.querySelector("#bgPicker").addEventListener("change", () => {
   if (this.files[0]) {
     let image = new Image();
     image.src = URL.createObjectURL(this.files[0]);
@@ -158,8 +139,6 @@ function drawSelectedImgs() {
   var selectedImages = getSelectedImages();
   var noPhotos = document.querySelector("#noPhotos").value;
   var template = document.querySelector("#template").value;
-  console.log(noPhotos);
-  console.log(template);
   if (noPhotos == 2) {
     draw(selectedImages);
   }
