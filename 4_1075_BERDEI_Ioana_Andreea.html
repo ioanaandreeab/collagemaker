@@ -5,10 +5,7 @@
     <meta charset="UTF-8" />
     <title>Photo Collage</title>
     <!--dependencies-->
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -25,18 +22,10 @@
   <body>
     <ul id="menu">
       <li>
-        <a href="#"><i class="fa fa-upload"></i></a>
-      </li>
-      <li>
-        <a href="#" id="halfFrame" onclick="half()"
-          ><img height="30" width="30" src="media/half.png"
-        /></a>
-      </li>
-      <li>
         <a href="#"><i class="fa fa-edit"></i></a>
       </li>
       <li>
-        <a href="" onclick="save()" download="collage.png" id="download"
+        <a onclick="save()" download="collage.png" id="download"
           ><i class="fa fa-download"></i
         ></a>
       </li>
@@ -54,16 +43,17 @@
     </div>
     <canvas id="myCanvas" height="500" width="800"></canvas>
     <div id="options">
-      <p>Background image:</p>
-      <input type="file" accept="image/*" id="bgPicker" />
-      <p>No. of photos:</p>
+      <button id="buttonSelectBg">
+        Folosește imagine de fundal!
+      </button>
+      <p>Nr. fotografii:</p>
       <select id="noPhotos">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
       </select>
-      <p>Template:</p>
+      <p>Șablon:</p>
       <select id="template">
         <option value="1">1</option>
         <option value="2">2</option>
