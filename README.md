@@ -1,6 +1,7 @@
 # collagemaker
 
 - Imaginile se incarca prin drag and drop in zona semnalata
-- Imaginea de fundal se stabileste inaintea desenarii propriu-zise a colajului
-- Pentru testarea functionalitatii desenarii colajului trebuie selectate doua imagini, se selecteaza pentru no. of photos valoarea 2, iar pentru template 1 si se apasa butonul de desenare
-- Pentru salvare se apasa ultimul buton din meniu, cu iconul sugestiv
+- Imaginea de fundal este prestabilita si se poate utiliza prin apasarea butonului sugestiv
+- Pentru testarea functionalitatii desenarii colajului trebuie selectate imaginile din lista prin bifarea checkboxurilor, numarul de imagini si template-ul din select
+- Pentru salvare se apasa butonul din meniul lateral, cu iconul sugestiv
+- Pentru aplicarea efectelor de culoare se apasa butoanele din sectiunea din partea dreapta jos, inscriptionate corespunzator

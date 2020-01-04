@@ -2,7 +2,11 @@
   <head>
     <!--responsiveness-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--caractere permise-->
     <meta charset="UTF-8" />
+    <!--favicon-->
+    <link rel="shortcut icon" type="image/png" href="media/favicon.png" />
+    <!--titlu-->
     <title>Photo Collage</title>
     <!--dependencies-->
     <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css" />
@@ -10,7 +14,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!--resources-->
     <link
       rel="stylesheet"
@@ -20,16 +23,16 @@
   </head>
 
   <body>
+    <!--meniu lateral cu optiune download-->
     <ul id="menu">
       <li>
-        <a href="#"><i class="fa fa-edit"></i></a>
-      </li>
-      <li>
-        <a onclick="save()" download="collage.png" id="download"
+        <a href="#" onclick="save()" download="collage.png" id="download"
           ><i class="fa fa-download"></i
         ></a>
       </li>
     </ul>
+
+    <!--sectiune pentru incarcarea imaginilor prin drag & drop-->
     <div id="imageLoader">
       <p>
         Drop your images here!
@@ -41,7 +44,11 @@
         Desenare
       </button>
     </div>
+
+    <!--canvas-->
     <canvas id="myCanvas" height="500" width="800"></canvas>
+
+    <!--sectiune pentru alegerea template-ului pentru colaj in functie de nr de imagini-->
     <div id="options">
       <button id="buttonSelectBg">
         Folosește imagine de fundal!
@@ -57,10 +64,18 @@
       <select id="template">
         <option value="1">1</option>
         <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
       </select>
     </div>
+
+    <!--sectiune pentru optiunile privind efectele de culoare-->
+    <div id="colorOptions">
+      <span>Efecte de culoare:</span>
+      <button id="negative">Negativ</button>
+      <button id="grayscale">Tonuri de gri</button>
+      <button id="sepia">Sepia</button>
+    </div>
+
+    <!--script-->
     <script src="4_1075_BERDEI_Ioana_Andreea.js"></script>
   </body>
 </html>

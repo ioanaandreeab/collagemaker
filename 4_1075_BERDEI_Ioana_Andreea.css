@@ -60,6 +60,12 @@ body {
   left: 140;
 }
 
+#colorOptions {
+  position: fixed;
+  right: 5;
+  bottom: 5;
+}
+
 li {
   padding: 5px;
 }

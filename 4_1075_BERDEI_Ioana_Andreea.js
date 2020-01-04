@@ -1,7 +1,14 @@
+//preluare canvas si context
 var myCanvas = document.querySelector("#myCanvas");
 var context = myCanvas.getContext("2d");
+
 //model - imaginile uploadate prin drag & drop
 var myImages = [];
+
+//sunete folosite in app
+var dingSound = new Audio("./media/ding.mp3");
+var sparklesSound = new Audio("./media/sparkle.mp3");
+var selectedSound = new Audio("./media/select.mp3");
 
 //INITIALIZARE MODEL - incarcarea imaginilor prin drag & drop
 var imageArea = document.querySelector("#imageLoader");
@@ -12,31 +19,40 @@ imageArea.ondrop = e => {
   e.preventDefault(); //nu lasa browserul sa deschida imaginea in pagina
   let files = e.dataTransfer.files;
   if (files.length > 0) {
+    //pentru toate imaginile incarcate
     for (let i = 0; i < files.length; i++) {
+      //cu ajutorul unui filereader
       let reader = new FileReader();
       reader.onload = e => {
         let dest = document.querySelector("#imageLoader");
+        //se creeaza o imagine noua si se adauga elementul in DOM
         let currImg = new Image();
         currImg.src = e.target.result;
         currImg.id = "img_" + myImages.length;
         currImg.selected = 0;
         myImages.push(currImg);
-        console.log(myImages);
-        console.log(currImg);
         dest.appendChild(currImg);
+        //se adauga in DOM si checkboxurile corespunzatorare fiecarei imagini
         var correspCB = document.createElement("input");
         correspCB.setAttribute("type", "checkbox");
         correspCB.id = "checkBox_" + (myImages.length - 1);
+        //handle eveniment de change pentru fiecare checkbox
+        //sunet
+        dingSound.play();
         correspCB.addEventListener("change", e => {
           var currImgSelected;
           var currCheckbox = e.target;
+          var currCheckboxId = currCheckbox.id;
+          var currImgSelectedId = "img_" + currCheckboxId.split("_")[1];
+          currImgSelected = document.getElementById(currImgSelectedId);
+          //sunet
+          selectedSound.play();
           if (currCheckbox.checked) {
-            let currCheckboxId = currCheckbox.id;
-            let currImgSelectedId = "img_" + currCheckboxId.split("_")[1];
-            currImgSelected = document.getElementById(currImgSelectedId);
             currImgSelected.selected = 1;
           }
-          console.log(currImgSelected);
+          if (currCheckbox.checked == false) {
+            currImgSelected.selected = 0;
+          }
         });
         dest.appendChild(correspCB);
       };
@@ -89,7 +105,7 @@ function drawVertical(images) {
   }
 }
 
-//actulaizare model -> SABLON 2 - desenarea unui numar de imagini pe orizontala
+//ACTUALIZARE MODEL -> SABLON 2 - desenarea unui numar de imagini pe orizontala
 function drawHorizontal(images) {
   for (var i = 0; i < images.length; i++) {
     let currentImage = images[i];
@@ -106,7 +122,8 @@ function drawHorizontal(images) {
     context.drawImage(currentImage, x, y, imageWidth, imageHeight);
   }
 }
-//actualizare model -> SABLON 3 - desenarea a 3 imagini, una in jumatatea de sus, doua in jumatatea de jos
+
+//ACTUALIZARE MODEL -> SABLON 3 - desenarea a 3 imagini, una in jumatatea de sus, doua in jumatatea de jos
 function drawSplitTrio(images) {
   let image1 = images[0];
   let image2 = images[1];
@@ -127,7 +144,6 @@ function drawSplitTrio(images) {
   x1 = (myCanvas.width - imageWidth1) / 2;
   y1 = 10;
   context.drawImage(image1, x1, y1, imageWidth1, imageHeight1);
-
   //celelalte doua imagini ocupa cate jumatate din cealalta jumatate a canvasului, pe orizontala
   imageHeight2 = myCanvas.height / 2 - 20;
   imageWidth2 = image2.width * (imageHeight2 / image2.height);
@@ -138,7 +154,8 @@ function drawSplitTrio(images) {
   context.drawImage(image2, x2, y2, imageWidth2, imageHeight2);
   context.drawImage(image3, x3, y2, imageWidth3, imageHeight2);
 }
-//actualizare model -> SABLON 4 - desenarea a 4 imagini, fiecare ocupand cate un sfert din canvas
+
+//ACTUALIZARE MODEL -> SABLON 4 - desenarea a 4 imagini, fiecare ocupand cate un sfert din canvas
 function drawQuarter(images) {
   let image1 = images[0];
   let image2 = images[1];
@@ -155,7 +172,7 @@ function drawQuarter(images) {
     imageWidth3,
     imageWidth4,
     imageHeight;
-
+  //toate imaginile vor avea aceeasi inaltime, scalarea se va face pe latime
   imageHeight = myCanvas.height / 2 - 20;
   imageWidth1 = image1.width * (imageHeight / image1.height);
   imageWidth2 = image2.width * (imageHeight / image2.height);
@@ -172,18 +189,32 @@ function drawQuarter(images) {
   context.drawImage(image3, x3, y2, imageWidth3, imageHeight);
   context.drawImage(image4, x4, y2, imageWidth4, imageHeight);
 }
-//functie de salvare a colajului din canvas
-function save() {
-  let button = document.getElementById("download");
-  let dataURL = myCanvas.toDataURL("image/png");
-  button.href = dataURL;
-}
+
+//event handler pentru adaugarea dinamica a optiunilor suplimentare pentru template-urile 3 si 4
+let selectNoPhotos = document.querySelector("#noPhotos");
+selectNoPhotos.addEventListener("change", () => {
+  let selectTemplate = document.querySelector("#template");
+  let newOption = document.createElement("option");
+  if (selectNoPhotos.value == 3) {
+    selectTemplate.options[2] = null;
+    newOption.text = "3";
+    newOption.value = "3";
+    selectTemplate.appendChild(newOption);
+  } else if (selectNoPhotos.value == 4) {
+    selectTemplate.options[2] = null;
+    newOption.text = "4";
+    newOption.value = "4";
+    selectTemplate.appendChild(newOption);
+  } else {
+    selectTemplate.options[2] = null;
+  }
+});
 
 //posibilitate selectare imagine de fundal (predefinita)
 //pentru canvas, la apasarea unui buton
 //se preia instanta butonului
 let buttonBg = document.querySelector("#buttonSelectBg");
-//handle pentru evenimentul de click
+//handler pentru evenimentul de click
 buttonBg.addEventListener("click", () => {
   let backgroundImage = new Image();
   backgroundImage.src = "media/pattern.jpg";
@@ -191,51 +222,61 @@ buttonBg.addEventListener("click", () => {
     context.fillStyle = context.createPattern(backgroundImage, "repeat");
     context.fillRect(0, 0, myCanvas.width, myCanvas.height);
   };
+  //sunet
+  dingSound.play();
 });
 
+//functie pentru stergerea imaginii selectate
 function deleteSelectedImg() {
   var imagesToBeDeleted = [];
+  //se preiau imaginile ce trebuiesc a fi sterse
   for (let i = 0; i < myImages.length; i++) {
     if (myImages[i].selected === 1) {
       imagesToBeDeleted.push(myImages[i]);
     }
   }
+  //se gaseste fiecare checkbox selectat corespunzator unei imagini
   for (let i = 0; i < imagesToBeDeleted.length; i++) {
     let currCheckboxSelected = document.getElementById(
       "checkBox_" + imagesToBeDeleted[i].id.split("_")[1]
     );
+    //se elimina din DOM si din lista de imagini
     currCheckboxSelected.parentNode.removeChild(currCheckboxSelected);
     imagesToBeDeleted[i].parentNode.removeChild(imagesToBeDeleted[i]);
     let indexRemoved = myImages.indexOf(imagesToBeDeleted[i]);
+    // -1 pentru ca indexul porneste de la 0
     if (indexRemoved > -1) {
       myImages.splice(indexRemoved, 1);
     }
-    console.log(myImages);
   }
 }
 
+//functie pentru preluarea imaginilor selectate
 function getSelectedImages() {
   let selectedImages = [];
   for (let i = 0; i < myImages.length; i++) {
+    //se verifica proprietatea selected a fiecarei imagini din array-ul de imagini incarcate
     if (myImages[i].selected === 1) {
       selectedImages.push(myImages[i]);
     }
   }
+  //se returneaza array-ul ce contine doar imaginile selectate si dorite a fi desenate pe canvas
   return selectedImages;
 }
 
+//functie pentru desenarea imaginilor selectate pe canvas
 function drawSelectedImgs() {
   var selectedImages = getSelectedImages();
   var noPhotos = document.querySelector("#noPhotos").value;
   var template = document.querySelector("#template").value;
-  console.log(selectedImages.length);
-  console.log(noPhotos);
+  //validari daca s-a selectat ceva si daca numarul selectat de imagini corespunde numarului din optiuni
   if (selectedImages.length == 0)
     alert("Trebuie să selectați măcar o imagine pentru desenare!");
   else if (selectedImages.length != noPhotos) {
     alert(
       "Numărul de fotografii alese nu este același cu numărul de fotografii suportate de template-ul selectat!"
     );
+    //desenari in functie de sablonul si numarul de imagini alese
   } else {
     if (template == 1) {
       drawVertical(selectedImages);
@@ -246,5 +287,51 @@ function drawSelectedImgs() {
     } else if (template == 4 && selectedImages.length == 4) {
       drawQuarter(selectedImages);
     }
+    //sunet
+    sparklesSound.play();
   }
+}
+
+//vor fi folosite in toate functiile ce privesc efecte de culoare
+var imageData;
+var info;
+//prelucrari privind culoarea - gray, negativ, sepia
+document.querySelector("#grayscale").addEventListener("click", () => {
+  imageData = context.getImageData(0, 0, myCanvas.width, myCanvas.height);
+  info = imageData.data;
+  for (let i = 0; i < myCanvas.height * myCanvas.width * 4; i += 4) {
+    info[i] = info[i + 1] = info[i + 2] =
+      info[i] * 0.299 + 0.587 * info[i + 1] + 0.114 * info[i + 2];
+  }
+  context.putImageData(imageData, 0, 0);
+});
+document.querySelector("#negative").addEventListener("click", () => {
+  imageData = context.getImageData(0, 0, myCanvas.width, myCanvas.height);
+  info = imageData.data;
+  for (let i = 0; i < myCanvas.height * myCanvas.width * 4; i += 4) {
+    info[i] = 255 - info[i]; //rosu
+    info[i + 1] = 255 - info[i + 1]; //verde
+    info[i + 2] = 255 - info[i + 2]; //albastru
+  }
+  context.putImageData(imageData, 0, 0);
+});
+document.querySelector("#sepia").addEventListener("click", () => {
+  imageData = context.getImageData(0, 0, myCanvas.width, myCanvas.height);
+  info = imageData.data;
+  for (let i = 0; i < myCanvas.height * myCanvas.width * 4; i += 4) {
+    //se calculeaza valoarea pt tonurile de gri
+    var gray = info[i] * 0.299 + 0.587 * info[i + 1] + 0.114 * info[i + 2];
+    //se adauga culoare inapoi in tonurile de gri
+    info[i] = gray + 50;
+    info[i + 1] = gray + 20;
+    info[i + 2] = gray;
+  }
+  context.putImageData(imageData, 0, 0);
+});
+
+//functie de salvare a colajului din canvas
+function save() {
+  let button = document.getElementById("download");
+  let dataURL = myCanvas.toDataURL("image/png");
+  button.href = dataURL;
 }
